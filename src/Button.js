@@ -6,11 +6,13 @@ class Button extends Component {
     const {
       backgroundColor,
       onClick,
-      label
+      label,
+      height = '1rem',
+      width = '1rem',
     } = this.props;
 
     return (
-      <button className="Button" style={{backgroundColor: backgroundColor}} onClick={onClick}>
+      <button className="Button" style={{ backgroundColor: backgroundColor, height: height, width: width }} onClick={ onClick }>
       {label}
       </button>
     );

@@ -1,23 +1,17 @@
 .Button {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding: 0.1rem;
+  display: inline-block;
+  cursor: pointer;
   background-color: #4CAF50;
   border: none;
   color: white;
   text-align: center;
-  justify-content: center;
   text-decoration: none;
-  max-width: 4rem;
-  max-height: 4rem;
-  min-width: 2rem;
-  padding: 0.5rem;
-  margin: 0.5rem;
-  font-size: inherit;
+  padding: 0.15rem;
+  margin: 0.25rem;
+  font-size: 0.8rem;
 }
 
 .Button:hover {
-  background-color: #4FDF50;
+  filter: brightness(120%);
   text-decoration: none;
 }

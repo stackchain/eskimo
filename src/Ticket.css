@@ -27,17 +27,19 @@
   min-height: 2rem;
   justify-content: flex-end;
   align-items: center;
-}
-
-.Ticket-items:hover {
-  background-color: #4ad;
-  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.8rem;
 }
 
 .Item {
   display: inherit;
   flex: 1;
   flex-direction: row;
+  font-size: 1.8rem;
+}
+.Item:hover {
+  background-color: #4ad;
+  text-decoration: none;
 }
 
 .Item-price {

@@ -20,13 +20,15 @@
 
 .App-products {
   display: inherit;
-  flex: 6;
+  flex: 5;
   flex-direction: row;
   padding-right: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .App-ticket {
   display: inherit;
-  flex: 4;
+  flex: 5;
   flex-direction: column;
 }
