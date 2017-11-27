@@ -2,30 +2,61 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 0.1rem;
+  padding: 0.2rem;
   border: none;
-  color: white;
+  background-color: #eee;
 }
 
 .Ticket-header {
   display: inherit;
   flex: 2;
-  background-color: #faf0f0;
+  min-height: 2rem;
 }
 
 .Ticket-items {
   display: inherit;
   flex: 6;
-  background-color: #f0fab0;
+  min-height: 2rem;
+  flex-direction: column;
+  background-color: #e0e0e0;
 }
 
 .Ticket-total {
   display: inherit;
   flex: 2;
-  background-color: #faccf0;
+  min-height: 2rem;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .Ticket-items:hover {
-  background-color: #4FDF50;
+  background-color: #4ad;
   text-decoration: none;
+}
+
+.Item {
+  display: inherit;
+  flex: 1;
+  flex-direction: row;
+}
+
+.Item-price {
+  display: inherit;
+  flex: 1;  
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.Item-quantity {
+  display: inherit;
+  flex: 1;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.Item-subtotal {
+  display: inherit;
+  flex: 1;
+  justify-content: flex-end;
+  align-items: center;
 }

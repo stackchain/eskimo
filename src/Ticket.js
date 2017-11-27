@@ -6,7 +6,7 @@ class Button extends Component {
     const {
       ticket = {
         quantity: 0,
-        subtotal: 0.0,
+        total: 0.0,
         items: [],
       },
     } = this.props;
@@ -14,18 +14,24 @@ class Button extends Component {
     return (
       <div className="Ticket">
         <div className="Ticket-header">
-        
+          <div className="Item-price">R$</div>
+          <div className="Item-quantity">Qt</div>
+          <div className="Item-subtotal">Subtotal</div>
         </div>
         <div className="Ticket-items">
-          { ticket.items.length }
           {
             ticket.items.map((v, i) => {
-              return <div>{v.quantity} * {v.price} = {v.subtotal}<br /></div>
+              return (
+                <div key={i} className="Item">
+                  <div className="Item-price">{v.price}</div>
+                  <div className="Item-quantity">{v.quantity}</div>
+                  <div className="Item-subtotal">{v.subtotal}</div>
+                </div>)
             })
           }
         </div>
         <div className="Ticket-total">
-          Items: {ticket.quantity} Total R$ {ticket.total || '0.00'}
+          ({ticket.quantity}) Total R$ {ticket.total.toFixed(2) || '0.00'}
         </div>      
       </div>
     );

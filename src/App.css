@@ -1,7 +1,3 @@
-html {
-  font-size: 16px;
-}
-
 .App {
   display: flex;
   flex-direction: column;
@@ -11,47 +7,26 @@ html {
 .App-header {
   display: inherit;
   flex: 1;
-  background-color: #00aa00;
+  background-color: #eee;
   padding: 0.5rem;
 }
 
 .App-body {
   display: inherit;
   flex: 9;
-  background-color: #dd0000;
   flex-direction: row;
   padding: 0.5rem;
 }
 
 .App-products {
   display: inherit;
-  flex: 7;
-  background-color: #0f00f0;
+  flex: 6;
   flex-direction: row;
   padding-right: 0.5rem;
 }
 
 .App-ticket {
   display: inherit;
-  flex: 3;
-  background-color: #f000f0;
+  flex: 4;
   flex-direction: column;
-}
-
-.App-ticket-header {
-  display: inherit;
-  flex: 2;
-  background-color: #faf0f0;
-}
-
-.App-ticket-items {
-  display: inherit;
-  flex: 6;
-  background-color: #f0fab0;
-}
-
-.App-ticket-total {
-  display: inherit;
-  flex: 2;
-  background-color: #faccf0;
 }
