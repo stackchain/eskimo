@@ -17,14 +17,15 @@ class Button extends Component {
         
         </div>
         <div className="Ticket-items">
+          { ticket.items.length }
           {
             ticket.items.map((v, i) => {
-              return <div>{v.quantity} * {v.price} = {v.subtotal}</div>
+              return <div>{v.quantity} * {v.price} = {v.subtotal}<br /></div>
             })
           }
         </div>
         <div className="Ticket-total">
-        Items: {ticket.quantity} Total R$ {ticket.total || '0.00'}
+          Items: {ticket.quantity} Total R$ {ticket.total || '0.00'}
         </div>      
       </div>
     );

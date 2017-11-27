@@ -73,7 +73,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <span>header</span>
+          <Button label='Cancel' onClick={() => reset()}/>
         </header>
         <div className="App-body">
           <div className="App-products">
@@ -90,6 +90,10 @@ class App extends Component {
       </div>
     );
   }
+}
+
+document.onkeydown = (e) => {
+  console.log(e);
 }
 
 export default App;
