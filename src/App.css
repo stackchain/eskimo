@@ -9,6 +9,7 @@
   flex: 1;
   background-color: #eee;
   padding: 0.5rem;
+  align-items: center;
 }
 
 .App-body {

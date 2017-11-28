@@ -12,6 +12,8 @@ class Button extends Component {
       cancel = (i) => console.log('cancel', i)
     } = this.props;
 
+    console.log(this.props);
+
     return (
       <div className="Ticket">
         <div className="Ticket-header">
@@ -24,15 +26,15 @@ class Button extends Component {
             ticket.items.map((v, i) => {
               return (
                 <div key={i} className="Item" onClick={() => cancel(i)}>
-                  <div className="Item-price">{v.price.toFixed(2)}</div>
+                  <div className="Item-price">{Number(v.price).toFixed(2)}</div>
                   <div className="Item-quantity">x {v.quantity}</div>
-                  <div className="Item-subtotal">{v.subtotal}</div>
+                  <div className="Item-subtotal">{Number(v.subtotal).toFixed(2)}</div>
                 </div>)
             })
           }
         </div>
         <div className="Ticket-total">
-          ({ticket.quantity}) Total R$ {ticket.total.toFixed(2) || '0.00'}
+          ({ticket.quantity}) Total R$ {Number(ticket.total).toFixed(2) || '0.00'}
         </div>      
       </div>
     );

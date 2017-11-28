@@ -43,27 +43,23 @@ data.push({
   price: 13.00,
 });
   
-const receipt = {
- total: 0.00,
- quantity: 0,
- items: []
-};
-
-function reset(r) {
- r = {
-   total: 0.00,
-   quantity: 0,
-   items: []
- }
-}
-
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      receipt,
+      receipt: {
+        total: 0.00,
+        quantity: 0,
+        items: []               
+      },
+      isMoney: false,
+      money: 0,
     }
+  }
+
+  changeMoney(s, v) {
+    return ({...s, money: s.money + v});
   }
 
   componentWillMount() {
@@ -73,54 +69,57 @@ class App extends Component {
   componentWillUnmount() {
 
   }
+  
+  add(s, i) {
+    const r = _.cloneDeep(s.receipt);
+    r.total += i.price;
+    r.quantity += 1;
+    r.total.toFixed(2);
+
+    const index = _.findIndex(r.items, (v) => v.price === i.price);
+
+    if(index === -1) {
+      r.items = [
+        ...r.items,
+        {
+          quantity: 1,
+          price: i.price,
+          subtotal: i.price,
+        }];
+    } else {
+      r.items = r.items.map((v, i) => {
+        if(i !== index) return v;
+        return {
+          ...v,
+          quantity: v.quantity + 1,
+          subtotal: (v.price * (v.quantity + 1)).toFixed(2),
+        }
+      });
+    }
+    return ({...s, receipt: r });
+  };
+
+  reset (s) {
+    return ({...s,
+      receipt: {
+        total: 0.00,
+        quantity: 0,
+        items: [],
+      },
+      isMoney: false,
+      money: 0,        
+    });
+  };
 
   render() {
     let {
      receipt = {},
+     isMoney = false,
+     money = 0,
     } = this.state;
-
-    const reset = () => {
-      this.setState({
-        receipt: {
-          total: 0.00,
-          quantity: 0,
-          items: [],
-        }        
-      });
-    };
-
-    const add = (i) => {
-      const r = _.cloneDeep(this.state.receipt);
-      r.total += i.price;
-      r.quantity += 1;
-      r.total.toFixed(2);
-
-      const index = _.findIndex(r.items, (v) => v.price === i.price);
-
-      if(index === -1) {
-        r.items = [
-          ...r.items,
-          {
-            quantity: 1,
-            price: i.price,
-            subtotal: i.price,
-          }];
-      } else {
-        r.items = r.items.map((v, i) => {
-          if(i !== index) return v;
-          return {
-            ...v,
-            quantity: v.quantity + 1,
-            subtotal: (v.price * (v.quantity + 1)).toFixed(2),
-          }
-        });
-      }
-      this.setState({ receipt: r })
-    };
 
     const remove = (i) => {    
       const r = _.cloneDeep(this.state.receipt);
-      console.log(JSON.stringify(r));
       r.total -= r.items[i].subtotal;
       r.quantity -= r.items[i].quantity;
       r.total.toFixed(2);
@@ -131,20 +130,28 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <Button label='Cancel' onClick={() => reset()} backgroundColor='#f44336' width='4.5rem' height='1.5rem'/>
-          <Button label='Cartao' onClick={() => reset()} width='4.5rem' height='1.5rem'/>
-          <Button label='Dinheiro' onClick={() => reset()} width='4.5rem' height='1.5rem'/>
+          <Button label='Cancel' onClick={() => this.setState({...this.reset(this.state)})} backgroundColor='#f44336' width='4.5rem' height='1.5rem'/>
+          <Button label='Cartao' onClick={() => this.setState({...this.reset(this.state)})} width='4.5rem' height='1.5rem'/>
+          <Button label='Dinheiro' onClick={() => this.setState({...this.reset(this.state)})} backgroundColor='#008CBA' width='4.5rem' height='1.5rem'/>
+          <input type="text" pattern="[0-9]*" onChange={this.handleChange} value={this.state.money} />
+          <span>Troco R$ {Number(receipt.total - money).toFixed(2)}</span>
+          <Button label='OK' onClick={() => this.setState({...this.reset(this.state)})} width='4.5rem' height='1.5rem'/>
         </header>
         <div className="App-body">
           <div className="App-products">
             {
               data.map((v, c) => {
-                return <Button key={c} label={v.label} onClick={() => add(v)} width='4.5rem' height='4.5rem' />
+                return <Button className="product" key={c} label={v.label} onClick={() => this.setState({...this.add(this.state, v)})} width='4.5rem' height='4.5rem' />
+              })
+            }
+            {
+              [0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50].map((v, c) => {
+                return <Button className="money" key={c} label={`R$ ${v.toFixed(2)}`} onClick={() => this.setState({...this.changeMoney(this.state, v)})} backgroundColor='#008CBA' width='4.5rem' height='4.5rem' />
               })
             }
           </div>
           <div className="App-ticket">
-            <Ticket ticket={receipt} cancel={remove.bind(this)}/>
+            <Ticket ticket={this.state.receipt} cancel={remove.bind(this)}/>
           </div>
         </div>
       </div>
