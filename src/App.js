@@ -38,9 +38,22 @@ data.push({
   price: 5.00,
 });
 data.push({
+  label: 'R$ 6.90',
+  price: 6.90,
+});
+data.push({
   label: 'R$ 9.00',
   price: 9.00,
 });
+data.push({
+  label: 'R$ 10.00',
+  price: 10.00,
+});
+data.push({
+  label: 'R$ 12.50',
+  price: 12.50,
+});
+
 data.push({
   label: 'R$ 13.00',
   price: 13.00,
@@ -176,7 +189,7 @@ class App extends Component {
                 return <Button className="product" key={c} label={v.label} onClick={() => this.setState({...this.add(this.state, v)})} width='5rem' height='5rem' />
               })
               :
-              [0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 0].map((v, c) => {
+              [0.1, 0.25, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0, 0].map((v, c) => {
                 return <Button className="money" key={c} label={v? `R$ ${v.toFixed(2)}` : 'Zerar'} onClick={() => v? this.setState({...this.changeMoney(this.state, v)}): this.setState({money: 0})} backgroundColor={v? '#008CBA' : '#f44336'} width='5rem' height='5rem' />
               })
             }
