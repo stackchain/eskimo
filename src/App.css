@@ -33,3 +33,10 @@
   flex: 5;
   flex-direction: column;
 }
+
+.right {
+  display: inherit;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+}
