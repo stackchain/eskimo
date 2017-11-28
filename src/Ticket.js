@@ -9,6 +9,7 @@ class Button extends Component {
         total: 0.0,
         items: [],
       },
+      troco = 0.0,
       cancel = (i) => console.log('cancel', i)
     } = this.props;
 

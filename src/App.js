@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import Button from './Button'
-import Ticket from './Ticket'
-import _ from 'lodash'
+import Button from './Button';
+import Ticket from './Ticket';
+import _ from 'lodash';
+import * as firebase from 'firebase';
+import moment from 'moment';
+
 
 const data = []
 
@@ -43,6 +46,19 @@ data.push({
   price: 13.00,
 });
   
+
+
+// Initialize Firebase
+const config = {
+  apiKey: "AIzaSyDshRp-xmzOBuj-JyRvwmtHRsa_9tLz44k",
+  authDomain: "eskimo-3bf82.firebaseapp.com",
+  databaseURL: "https://eskimo-3bf82.firebaseio.com",
+  projectId: "eskimo-3bf82",
+  storageBucket: "",
+  messagingSenderId: "659719251779"
+};
+firebase.initializeApp(config);
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -111,6 +127,15 @@ class App extends Component {
     });
   };
 
+  handleSave(s) {
+    firebase.database().ref('/receipts').push({...s, created: moment().format()}).then((r) => {
+      console.log(r);
+    }).catch((e) => {
+      console.log(e);
+    })
+    this.setState(this.reset(this.state));
+  }
+
   render() {
     let {
      receipt = {},
@@ -131,13 +156,16 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <div>
-            <Button label='Cancel' onClick={() => this.setState({...this.reset(this.state)})} backgroundColor='#f44336' width='4.5rem' height='1.5rem'/>
+            <Button label='Cancel' onClick={() => this.setState({...this.reset(this.state)})} backgroundColor='#f44336' width='5rem' height='5rem'/>
           </div>
           <div className="right">
-            <Button label='Cartao' onClick={() => this.setState({...this.reset(this.state)})} width='4.5rem' height='1.5rem'/>
-            <Button label='Dinheiro' onClick={() => this.setState({...this.state, isMoney: !this.state.isMoney})} backgroundColor='#008CBA' width='4.5rem' height='1.5rem'/>
-            <span>{Number(this.state.money).toFixed(2)}  - Troco R$ {Number(receipt.total - money).toFixed(2)}</span>
-            <Button label='OK' onClick={() => this.setState({...this.reset(this.state)})} width='4.5rem' height='1.5rem'/>
+            <Button label='Cartao' onClick={() => this.handleSave({...this.state.receipt, method: 'card'})} width='5rem' height='5rem'/>
+            <Button label='Dinheiro' onClick={() => this.setState({...this.state, isMoney: !this.state.isMoney})} backgroundColor='#008CBA' width='5rem' height='5rem'/>
+            <div style={{display: 'inherit', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'flex-end'}}> 
+              <span>{Number(this.state.money).toFixed(2)}</span>
+              <span>Troco R$ {Number(receipt.total - money).toFixed(2)}</span>
+            </div>
+            <Button label='OK' style={{opacity: isMoney? '1' : '0.5'}} onClick={() => this.handleSave({...this.state.receipt, method: 'money'})} width='5rem' height='5rem'/>
           </div>
         </header>
         <div className="App-body">
@@ -145,16 +173,16 @@ class App extends Component {
             {
               !this.state.isMoney ?
               data.map((v, c) => {
-                return <Button className="product" key={c} label={v.label} onClick={() => this.setState({...this.add(this.state, v)})} width='4.5rem' height='4.5rem' />
+                return <Button className="product" key={c} label={v.label} onClick={() => this.setState({...this.add(this.state, v)})} width='5rem' height='5rem' />
               })
               :
               [0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 0].map((v, c) => {
-                return <Button className="money" key={c} label={v? `R$ ${v.toFixed(2)}` : 'Zerar'} onClick={() => v? this.setState({...this.changeMoney(this.state, v)}): this.setState({money: 0})} backgroundColor={v? '#008CBA' : '#f44336'} width='4.5rem' height='4.5rem' />
+                return <Button className="money" key={c} label={v? `R$ ${v.toFixed(2)}` : 'Zerar'} onClick={() => v? this.setState({...this.changeMoney(this.state, v)}): this.setState({money: 0})} backgroundColor={v? '#008CBA' : '#f44336'} width='5rem' height='5rem' />
               })
             }
           </div>
           <div className="App-ticket">
-            <Ticket ticket={this.state.receipt} cancel={remove.bind(this)}/>
+            <Ticket ticket={receipt} cancel={remove.bind(this)}/>
           </div>
         </div>
       </div>

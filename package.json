@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "http://stackchain.github.io/eskimo",
   "dependencies": {
+    "firebase": "^4.6.2",
+    "moment": "^2.19.2",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-scripts": "1.0.17"
