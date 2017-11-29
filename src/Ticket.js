@@ -13,8 +13,6 @@ class Button extends Component {
       cancel = (i) => console.log('cancel', i)
     } = this.props;
 
-    console.log(this.props);
-
     return (
       <div className="Ticket">
         <div className="Ticket-header">

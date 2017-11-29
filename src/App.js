@@ -6,7 +6,6 @@ import _ from 'lodash';
 import * as firebase from 'firebase';
 import moment from 'moment';
 
-
 const data = []
 
 data.push({
@@ -58,8 +57,6 @@ data.push({
   label: 'R$ 13.00',
   price: 13.00,
 });
-  
-
 
 // Initialize Firebase
 const config = {
@@ -142,9 +139,7 @@ class App extends Component {
 
   handleSave(s) {
     firebase.database().ref('/receipts').push({...s, created: moment().format()}).then((r) => {
-      console.log(r);
     }).catch((e) => {
-      console.log(e);
     })
     this.setState(this.reset(this.state));
   }
